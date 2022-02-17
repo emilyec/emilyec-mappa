@@ -17,25 +17,29 @@ const options ={
 lat: 49.261911,
 lng: -123.250272,
 zoom: 3,
-style: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+style: "https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}"
 }
+
 //p5.js setup
 function setup(){
   canvas = createCanvas(640,640);
   myMap = mappa.tileMap(options);
   myMap.overlay(canvas)
+  
 
-//fill(200, 100, 100);
+
 //Load the meteorite data
 meteorites = loadTable('Meteorite_Landings.csv', 'csv', 'header');
 
   myMap.onChange(drawMeteorites);
-    fill(70, 203,31);
+    fill(70, 203,31); 
 	stroke(100);
 }
 
+
 function draw(){
 }
+ 
 // Draw the meteorites
 function drawMeteorites() {
   clear();
@@ -49,11 +53,23 @@ function drawMeteorites() {
 
       let size = meteorites.getString(i, 'mass (g)');
       size = map(size, 558, 60000000, 1, 25) + myMap.zoom();
-      fill(224, 198, 52)
+	  stroke(240, 158, 40);
+      fill(224, 198, 52);
 	  ellipse(pos.x, pos.y, size, size);
-    }
-  }
+/*//Label the meteorites when mouse over the point.
+	  let massLabel = meteorites.getString(i, 'mass (g)');
+	  let nameLabel = meteorites.getString(i, 'name');
+	  let mapLabels = nameLabel+ "\n" + massLabel + " g";
+	  fill(255);
+	  stroke(0);
+	  textSize(10);
+	  /*if (mouseX >= pos.x && mouseX <= pos.x && mouseY >= pos.y && mouseY <= pos.y){*/
+	  /*text(mapLabels, pos.x, pos.y);
+	  /*} else {}*/
+		}
+	}
 }
+	
   </script>
 </body>
 
